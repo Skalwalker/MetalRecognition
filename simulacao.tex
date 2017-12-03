@@ -1,0 +1,82 @@
+% Note that the a4paper option is mainly intended so that authors in
+% countries using A4 can easily print to A4 and see how their papers will
+% look in print - the typesetting of the document will not typically be
+% affected with changes in paper size (but the bottom and side margins will).
+% Use the testflow package mentioned above to verify correct handling of
+% both paper sizes by the user's LaTeX system.
+%
+% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
+% should be used if it is desired that the figures are to be displayed in
+% draft mode.
+%
+\documentclass[conference, compsoc, 12pt]{IEEEtran}
+\usepackage{blindtext, graphicx}
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Reconhecimento de alumínio e outros metais em meio ao lixo utilizando a base de dados de matérias MINC}
+
+\author{\IEEEauthorblockN{Renato Nobre}
+\IEEEauthorblockA{15/0146698\\
+Departamento de\\Ciência da Computação\\
+Universidade de Brasília}
+\and
+\IEEEauthorblockN{Khalil Carsten}
+\IEEEauthorblockA{15/0134495\\Departamento de\\Ciência da Computação\\
+Universidade de Brasília}}
+
+\maketitle
+
+
+\IEEEpeerreviewmaketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+
+\section{Introdução}
+
+O alumínio é o metal mais abundante na natureza e recentemente utilizado em diversas aplicações, como em embalagens, transmissões elétricas, construção civil e elementos estruturais de meios de transporte. O seu uso cada vez mais constante prova sua relevância para a vida moderna, e consequentemente cada vez mais haverá descartes intensos do material para o lixo. Portanto, facilitar sua reciclagem geraria maiores benefícios econômicos, sociais e políticos.
+
+Este trabalho propõe no entanto uma maneira de facilitar a identificação do alumínio e metais dentro de outros tipos de lixo. Porém percebe-se que o reconhecimento de metais em imagens de lixo do mundo real é uma tarefa desafiadora. Os materiais que podem conter no lixo contém uma diversa gama de textura, geometria, luminosidade e agrupamento, que combinados geram o problema particularmente difícil. Para tentar superar essa dificuldade, foi utilizado um conjunto de imagens em grande escala de materiais em diversos ambientes. Esse conjunto de imagens denominado, materiais em banco de dados de contexto, MINC (do inglês, \textit{Materials in Context Database}), foi criado no departamento de ciência da computação da Universidade de Cornell e possui mais de três milhões de figuras de imagens. O MINC tem sua magnitude de materiais mais ampla que os bancos de imagens anteriores e é bem separado em 23 categorias diversas.
+
+Usando o MINC foi treinada uma rede neural co-evolucionária com a arquitetura AlexNet para a classificação de materiais, esta rede foi utilizada para o trabalho. No entanto, notou-se que o MINC possuía em quase todas as imagens de treinamento um material bem separado do fundo e centralizado na imagem, tal comportamento não ocorre ao analisarmos fotos de lixos. Para tratar este problema foi desenvolvida uma técnica de janela deslizante que analisa aspectos menores em cada imagem, tentando assim classificar cada lixo de maneira correta e separar os metais.
+
+Em resumo, este trabalho fornece duas contribuições:
+
+\begin{enumerate}
+    \item Uma forma de separar metais do resto do lixo utilizando o banco de imagens MINC com uma rede neural co-evolucionária que possui uma arquitetura AlexNet
+    \item Métodos de analisar a imagem em segmentos menores na rede neural AlexNet 
+\end{enumerate}
+
+
+\section{Modelo}
+
+\section{Solução e Análise}
+
+\section{Resultados}
+
+\section{Conclusão}
+
+
+\begin{thebibliography}{1}
+
+\bibitem{IEEEhowto:kopka}
+H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
+  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+
+\end{thebibliography}
+
+% that's all folks
+\end{document}
