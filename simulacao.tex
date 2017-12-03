@@ -13,6 +13,7 @@
 \usepackage{blindtext, graphicx}
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{hyperref}
 
 
 
@@ -47,11 +48,11 @@ Universidade de Brasília}}
 
 \section{Introdução}
 
-O alumínio é o metal mais abundante na natureza e recentemente utilizado em diversas aplicações, como em embalagens, transmissões elétricas, construção civil e elementos estruturais de meios de transporte. O seu uso cada vez mais constante prova sua relevância para a vida moderna, e consequentemente cada vez mais haverá descartes intensos do material para o lixo. Portanto, facilitar sua reciclagem geraria maiores benefícios econômicos, sociais e políticos.
+O alumínio é o metal mais abundante na natureza e recentemente utilizado em diversas aplicações, como em embalagens, transmissões elétricas, construção civil e elementos estruturais de meios de transporte. O seu uso cada vez mais constante prova sua relevância para a vida moderna, e consequentemente cada vez mais haverá descartes intensos do material para o lixo. Portanto, facilitar sua reciclagem geraria maiores benefícios econômicos, sociais e políticos. De acordo com o artigo publicado na Folha de São Paulo o Brasil é o maior reciclador de latas de alumínio do mundo e que esta atividade de venda e reciclagem dessas latas injetaram cerca de 845 milhões de reais na economia.
 
 Este trabalho propõe no entanto uma maneira de facilitar a identificação do alumínio e metais dentro de outros tipos de lixo. Porém percebe-se que o reconhecimento de metais em imagens de lixo do mundo real é uma tarefa desafiadora. Os materiais que podem conter no lixo contém uma diversa gama de textura, geometria, luminosidade e agrupamento, que combinados geram o problema particularmente difícil. Para tentar superar essa dificuldade, foi utilizado um conjunto de imagens em grande escala de materiais em diversos ambientes. Esse conjunto de imagens denominado, materiais em banco de dados de contexto, MINC (do inglês, \textit{Materials in Context Database}), foi criado no departamento de ciência da computação da Universidade de Cornell e possui mais de três milhões de figuras de imagens. O MINC tem sua magnitude de materiais mais ampla que os bancos de imagens anteriores e é bem separado em 23 categorias diversas.
 
-Usando o MINC foi treinada uma rede neural co-evolucionária com a arquitetura AlexNet para a classificação de materiais, esta rede foi utilizada para o trabalho. No entanto, notou-se que o MINC possuía em quase todas as imagens de treinamento um material bem separado do fundo e centralizado na imagem, tal comportamento não ocorre ao analisarmos fotos de lixos. Para tratar este problema foi desenvolvida uma técnica de janela deslizante que analisa aspectos menores em cada imagem, tentando assim classificar cada lixo de maneira correta e separar os metais.
+Utilizamos a CNN já treinada pelo MINC disponibilizada pelos autores de \cite{Artigo principal} no site \href{http://opensurfaces.cs.cornell.edu/publications/minc/>}{OpenSurface}. No entanto, notou-se que o MINC possuía em quase todas as imagens de treinamento um material bem separado do fundo e centralizado na imagem. Além disso, as imagens de treinamento para metais, o nosso foco nesse projeto, resumiam-se em eletro-domésticos, pias de metal, aço inox, aparatos de cozinha no geral. Isso prejucou muito a análise de imagens de entulho de lixo onde os materiais mais comuns estão entre: latas de alimentos enlatados, eletrônicos e latas de refrigerante. Para contornar esse problema tivemos que executar um refinamento na CNN com imagens que coletamos do repositório \href{https://github.com/garythung/trashnet}{https://github.com/garythung/trashnet} em que o autor treinou uma CNN somente para reconhecimento de lixos.
 
 Em resumo, este trabalho fornece duas contribuições:
 
@@ -62,8 +63,13 @@ Em resumo, este trabalho fornece duas contribuições:
 
 
 \section{Modelo}
+Como primeiro passo utilizamos de maneira simplista e direta a AlexNet, pré-treinada, disponibilizada pelos autores de \emph{Material Recognition in the Wild with the Materials in Context Database} \cite{Artigo principal} para uma classificação de metais utilizando como entrada \emph{patchs} de imagens com entulhos ou conjunto de materiais diversos. Para essa execução utilizamos o Software Matlab com extensão  Caffe e Neural Networks. 
 
 \section{Solução e Análise}
+Como ponto de partida fizemos um \emph{dataset} com algumas imagens de alumínios e outros metais em meio ao lixo.
+
+
+
 
 \section{Resultados}
 
@@ -75,6 +81,10 @@ Em resumo, este trabalho fornece duas contribuições:
 \bibitem{IEEEhowto:kopka}
 H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
   0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+
+\bibitem{Artigo principal}
+S. Bell P. Upchurch N. Snavely K. Bala, Material Recognition in the Wild with the Materials in Context Database,
+Computer Vision and Pattern Recognition (CVPR), 2015.
 
 \end{thebibliography}
 
