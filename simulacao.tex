@@ -14,6 +14,7 @@
 \usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{graphicx}
 
 
 
@@ -58,18 +59,114 @@ Em resumo, este trabalho fornece duas contribuições:
 
 \begin{enumerate}
     \item Uma forma de separar metais do resto do lixo utilizando o banco de imagens MINC com uma rede neural co-evolucionária que possui uma arquitetura AlexNet
-    \item Métodos de analisar a imagem em segmentos menores na rede neural AlexNet 
+    \item Métodos de analisar a imagem em segmentos menores na rede neural AlexNet
 \end{enumerate}
 
 
 \section{Modelo}
-Como primeiro passo utilizamos de maneira simplista e direta a AlexNet, pré-treinada, disponibilizada pelos autores de \emph{Material Recognition in the Wild with the Materials in Context Database} \cite{Artigo principal} para uma classificação de metais utilizando como entrada \emph{patchs} de imagens com entulhos ou conjunto de materiais diversos. Para essa execução utilizamos o Software Matlab com extensão  Caffe e Neural Networks. 
+
+Ao realizar trabalhos de reconhecimento de imagens, um grande obstáculo é a construção de uma base consistente para
+treinar um modelo de aprendizagem. Reconhecimento de materiais requer que uma grande quantidade de imagens de diversas classes
+sejam separadas e utilizadas, para superar essa dificuldade foi utilizado o banco de imagens MINC.
+
+O MINC foi utilizado devido ao fato de consistir de mais de tres milhões de imagens, com 23 categorias de materias diferentes;
+seu tamanho é grande o suficiente para métodos de aprendizagem conseguir generalizars casos de teste; suas diversas categorias
+são representadas todas por uma diversa quantidade de conteúdo; há diversidade da disposição do conteudo analisado na imagem.
+
+A construção do MINC usou como base uma banco de imagens já existente, o FMD (do ingles, \textit{Flickr Material Database}). No entanto,
+precisava de mais conteudo para a criação de um banco de imagens consistente e para isso integrou fotos de um site contendo imagens
+de fotos profissioais de design de interior.
+
+Após a criação do MINC, os autores de \emph{Material Recognition in the Wild with the Materials in Context Database} utilizaram uma rede AlexNet
+\cite{Artigo principal} para testar a eficiencia do seu banco de imagens na criação de um modelo de aprendizagem.
+As fotos utilizadas do MINC foram dividas em casos de teste e treino e foram inseridas no modelo de forma como mostrado na \emph{Figura 1, 2, 3, 4}.
+Consequentemente, como grande parte do MINC foi feito utilizando fotos de interior de casas, ao analisar que contém diversos materiais em grande quantidades,
+como imagens de entulho ou sucata de lixo mostrado na \emph{Figura 5, 6, 7, 8} a rede perdia muita precisão. O excesso de materiais e a diferença de uniformidade
+da textura e luminosidade geraram uma mudança significante na média de acerto da AlexNet.
+
+\begin{figure}[ht]
+  \label{fig2}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=.8\linewidth]{metal_000001.jpg}
+    \caption{Metal 1}
+    \vspace{4ex}
+  \end{minipage}%%
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=.8\linewidth]{metal_000012.jpg}
+    \caption{Metal 2}
+    \vspace{4ex}
+  \end{minipage}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=.8\linewidth]{metal_000015.jpg}
+    \caption{Metal 3}
+    \vspace{4ex}
+  \end{minipage}%%
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=.8\linewidth]{metal_000025.jpg}
+    \caption{Metal 4}
+    \vspace{4ex}
+  \end{minipage}
+\end{figure}
+
+
+Torna-se evidente que ao analizarmos fotos de lixo com a AlexNet disponibilizada, a porcentagem de acerto dos materias metálicos
+reduz bastante. No entanto, como primeiro passo utilizamos de maneira simplista e direta a AlexNet pre-treinada,
+para uma classificação de metais usando como entrada \emph{patchs}
+de imagens com entulhos ou conjunto de materiais diversos. A \emph{Tabela 1}
+mostra o resultado desta classificação. Não obteve nenhum acerto e notas bem baixas,
+sendo $1$ a maior nota possível e tal nota dividida entre todas as 23 classes.
+Portanto julgar uma imagem entre 23 possibilidade de classe se torna um tanto excessivo
+quando o objetivo é somente julgar se algo é ou não um metal.
+
+\begin{figure}[ht]
+  \label{fig1}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=.8\linewidth]{lixo1.jpg}
+    \caption{Lixo 1}
+    \vspace{4ex}
+  \end{minipage}%%
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=.8\linewidth]{lixo2.jpg}
+    \caption{Lixo 2}
+    \vspace{4ex}
+  \end{minipage}
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=.8\linewidth]{lixo3.png}
+    \caption{Lixo 3}
+    \vspace{4ex}
+  \end{minipage}%%
+  \begin{minipage}[b]{0.5\linewidth}
+    \centering
+    \includegraphics[width=.8\linewidth]{lixo4.png}
+    \caption{Lixo 4}
+    \vspace{4ex}
+  \end{minipage}
+\end{figure}
+
+\begin{table}[]
+\centering
+\caption{Classificação AlexNet MINC}
+\label{Tabela 1}
+\begin{tabular}{|l|l|l|}
+\hline
+Imagens & Resultado & Nota \\ \hline
+Lixo 1 & Vidro & $0.0755$ \\ \hline
+Lixo 2 & Papel de Parede & $0.0040$ \\ \hline
+Lixo 3 & Papel de Parede & $0.0096$\\ \hline
+Lixo 4 & Espelho & $0.0316$ \\ \hline
+\end{tabular}
+\end{table}
 
 \section{Solução e Análise}
-Como ponto de partida fizemos um \emph{dataset} com algumas imagens de alumínios e outros metais em meio ao lixo.
 
-
-
+Tendo em vista que o objetivo é analisar
 
 \section{Resultados}
 
