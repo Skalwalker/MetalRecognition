@@ -69,11 +69,11 @@ Ao realizar trabalhos de reconhecimento de imagens, um grande obstáculo é a co
 treinar um modelo de aprendizagem. Reconhecimento de materiais requer que uma grande quantidade de imagens de diversas classes
 sejam separadas e utilizadas, para superar essa dificuldade foi utilizado o banco de imagens MINC.
 
-O MINC foi utilizado devido ao fato de consistir de mais de tres milhões de imagens, com 23 categorias de materias diferentes;
-seu tamanho é grande o suficiente para métodos de aprendizagem conseguir generalizars casos de teste; suas diversas categorias
-são representadas todas por uma diversa quantidade de conteúdo; há diversidade da disposição do conteudo analisado na imagem.
+O MINC foi utilizado devido ao fato de consistir de mais de três milhões de imagens, com 23 categorias de materiais diferentes;
+seu tamanho é grande o suficiente para métodos de aprendizagem conseguir generalizar casos de teste; suas diversas categorias
+são representadas todas por uma diversa quantidade de conteúdo; há diversidade da disposição do conteúdo analisado na imagem.
 
-A construção do MINC usou como base uma banco de imagens já existente, o FMD (do ingles, \textit{Flickr Material Database}). No entanto,
+A construção do MINC usou como base uma banco de imagens já existente, o FMD (do inglês, \textit{Flickr Material Database}). No entanto,
 precisava de mais conteudo para a criação de um banco de imagens consistente e para isso integrou fotos de um site contendo imagens
 de fotos profissioais de design de interior.
 
@@ -113,7 +113,7 @@ da textura e luminosidade geraram uma mudança significante na média de acerto 
 \end{figure}
 
 
-Torna-se evidente que ao analizarmos fotos de lixo com a AlexNet disponibilizada, a porcentagem de acerto dos materias metálicos
+Torna-se evidente que ao analisarmos fotos de lixo com a AlexNet disponibilizada, a porcentagem de acerto dos matérias metálicos
 reduz bastante. No entanto, como primeiro passo utilizamos de maneira simplista e direta a AlexNet pre-treinada,
 para uma classificação de metais usando como entrada \emph{patchs}
 de imagens com entulhos ou conjunto de materiais diversos. A \emph{Tabela 1}
@@ -169,6 +169,18 @@ Lixo 4 & Espelho & $0.0316$ \\ \hline
 Tendo em vista que o objetivo é analisar
 
 \section{Resultados}
+
+Para testar a solução proposta para o problema na seção anterior foram realizados diversos experimentos, com o objetivo de abranger todo o escopo do problema e analisar individualmente cada uma das implementações realizadas. Os experimentos foram realizados da forma que se descreve a seguir:
+
+\begin{itemize}
+    \item Um experimento realizado com a AlexNet sem nenhuma modificação, do jeito fornecido pelo artigo \cite{Artigo principal}. Com esse experimento podemos usar de base para comparar o efeito das modificações feitas.
+    \item Um experimento realizado com a AlexNet refinada com a base de imagens TrashNet, para analisar se o efeito da grande quantidade de materiais pode ser tratado se a rede neural fosse treinada com arquivos com materiais diversos em grande quantidades.
+    \item Experimento utilizando a técnica criada, Sliding Window, em cima da AlexNet não refinada, que verificará se a AlexNet realmente precisava de um refinamento ou se apenas uma abordagem mais local da imagem resolveria o problema.
+    \item Experimento utilizando a técnica criada, Sliding Window, em cima da AlexNet refinada, para verificar o efeito na porcentagem de acerto com todas as mudanças implementadas.
+\end{itemize}
+
+Todos os experimentos foram realizados com o mesmo conjunto de teste, e seus resultados estão descritos e detalhados a seguir.
+
 
 \section{Conclusão}
 
