@@ -15,6 +15,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{float}
 
 
 
@@ -43,7 +44,7 @@ Universidade de Brasília}}
 \IEEEpeerreviewmaketitle
 
 \begin{abstract}
-
+O alumínio é o metal mais abundante na natureza e é cada vez mas utilizado no mundo moderno. Seu uso possui diversos impactos, tanto no âmbito econômico quanto social e politico. Devido a esses fatores, o desenvolvimento de um método mais fácil de realizar a deteção do metal mediante a outros resíduos é extremamente necessário. Este trabalho propõe um método de identificação destes matérias utilizando uma rede neural treinada com o banco de imagens MINC e com a estrutura AlexNet. Para adaptar a rede ao problema proposto, foi realizado o refinamento utilizando um banco de imagens de metais misturados a outros resíduos, o TrashNet. Após o refinamento desenvolveu-se uma técnica de Sliding Window, para realizar a analise de regiões mais centradas em cada imagem, podendo pegar aspectos de objetos individualmente. Análise experimental demostrou que, apesar de ainda haver espaço para melhores, a abordagem mostra-se favorável na detecção de metais, sendo um importante passo inicial para o processo.
 \end{abstract}
 
 
@@ -172,16 +173,92 @@ Para testar a solução proposta para o problema na seção anterior foram reali
 
 \begin{itemize}
     \item Um experimento realizado com a AlexNet sem nenhuma modificação, do jeito fornecido pelo artigo \cite{Artigo principal}. Com esse experimento podemos usar de base para comparar o efeito das modificações feitas.
-    \item Um experimento realizado com a AlexNet refinada com a base de imagens TrashNet, para analisar se o efeito da grande quantidade de materiais pode ser tratado se a rede neural fosse treinada com arquivos com materiais diversos em grande quantidades.
     \item Experimento utilizando a técnica criada, Sliding Window, em cima da AlexNet não refinada, que verificará se a AlexNet realmente precisava de um refinamento ou se apenas uma abordagem mais local da imagem resolveria o problema.
+    \item Um experimento realizado com a AlexNet refinada com a base de imagens TrashNet, para analisar se o efeito da grande quantidade de materiais pode ser tratado se a rede neural fosse treinada com arquivos com materiais diversos em grande quantidades.
     \item Experimento utilizando a técnica criada, Sliding Window, em cima da AlexNet refinada, para verificar o efeito na porcentagem de acerto com todas as mudanças implementadas.
 \end{itemize}
 
 Todos os experimentos foram realizados com o mesmo conjunto de teste, e seus resultados estão descritos e detalhados a seguir.
 
+O primeiro experimento foi utilizado a AlexNet do jeito fornecido, pegando apenas uma janela da imagem e analisando em busca de metais. Como esperado, seu resultado foi extremamente insatisfatório nenhum metal foi encontrado em nenhuma das fotos fornecidas à rede neural (RN).
+Analisamos na tabela abaixo que em nenhum momento ele classificou algo como metal, dos 6 metais que continham ele classificou todos como não metais.
+
+\begin{table}[]
+\centering
+\caption{Tabela de Acerto da Classificação}
+\begin{tabular}{|l|l|l|}
+\hline
+          & Metal & Não Metal \\ \hline
+Metal     & 0     & 6         \\ \hline
+Não Metal & 0     & 6         \\ \hline
+\end{tabular}
+\end{table}
+
+
+No segundo experimento foi realizado novamente o método Sliding Window, ainda com a AlexNet não refinada, para estudar se o refinamento era realmente necessário. Nota-se que não há nenhuma marcação, indicando que a RN não encontrou nada como metálico, um exemplo de uma imagem utilizada está apresentada abaixo.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.9\linewidth]{not_train_100.png}
+    \caption{Resultado da RN sem nenhum tratamento}
+\end{figure}
+
+Portanto nota-se a necessidade de um refinamento na rede neural. Tal refinamento foi feito com o banco de imagens TrashNet. O terceiro experimento então é feito com a nova AlexNet refinada, mas no entanto, sem a técnica Sliding Window.
+
+Os resultados apresentados por esse experimento já foram mais promissores, a rede neural classifica 5 metais de maneira correta, errando apenas em duas instancias. E classificando também apenas um não metal de maneira errônea, acertando as outras quatro instancias.
+
+\begin{table}[]
+\centering
+\caption{Tabela de Acerto da Classificação}
+\begin{tabular}{|l|l|l|}
+\hline
+          & Metal & Não Metal \\ \hline
+Metal     & 5     & 2         \\ \hline
+Não Metal & 1     & 4         \\ \hline
+\end{tabular}
+\end{table}
+
+Para finalizar, realizou-se um ultimo experimento, usando a técnica Sliding Window desenvolvida, e a rede neural refinada. Os resultados estão dispostos nas imagens abaixo, organizadas pelo tamanho da janela e dos pulos utilizados. Percebe-se que os resultados apresentados realizam a identificação dos metais de maneira mais correta e eficiente.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\linewidth]{trained_64_32.png}
+    \caption{Resultado da RN refinada com a técnica Sliding Window. Tamanho da janela de 64 pixeis com pulos de 32 pixeis}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\linewidth]{trained_128_32.png}
+    \caption{Resultado da RN refinada com a técnica Sliding Window. Tamanho da janela de 128 pixeis com pulos de 32 pixeis}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\linewidth]{trained2_128_64.png}
+    \caption{Resultado da RN refinada com a técnica Sliding Window. Tamanho da janela 128 64 pixeis com pulos de 64 pixeis}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\linewidth]{trained_256_64.png}
+    \caption{Resultado da RN refinada com a técnica Sliding Window. Tamanho da janela de 256 pixeis com pulos de 64 pixeis}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.9\linewidth]{trained2_256_64.png}
+    \caption{Resultado da RN refinada com a técnica Sliding Window. Tamanho da janela de 256 pixeis com pulos de 64 pixeis}
+\end{figure}
 
 \section{Conclusão}
 
+O trabalho aborda um desafio intrigante na sociedade atual, a busca de matérias metálicos mediante a grande quantidade de lixo. A busca destes matérias para uma futura reciclagem traria benefícios diversos, tantos sociais, como econômicos e políticos. Para tratar esse desafio foi proposta uma análise de reconhecimento de imagens para detectar tais objetos.
+
+O reconhecimento do metal nas imagens foi realizado utilizando uma rede neural com a arquitetura AlexNet. Essa rede neural foi treinada utilizando o banco de imagens MINC, portanto posteriormente refinada utilizando o banco TrashNet, onde as imagens continham metais misturados a outros resíduos.
+
+No entanto, o refinamento da rede neural não foi o suficiente para encontrar metais de maneira eficiente e consequentemente foi desenvolvida a técnica, Sliding Window, para análise de diversos trechos em uma mesma imagem.
+
+Os resultados experimentais indicam que é possível sim realizar o reconhecimento de metais utilizando a AlexNet treinada com o MINC e refinada com a TrashNet. Mas apresentam resultados visivelmente melhores quando aplicados em conjunto com a técnica Sliding Window. Cabe a trabalho futuros realizar uma junção de mapa de probabilidades para os diversos tamanhos de janelas e pulos, pegando resultados cada vez mais precisos. Outros refinamentos na rede neural também está aberto a estudos.
 
 \begin{thebibliography}{1}
 
